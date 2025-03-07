@@ -8,8 +8,8 @@ fi
 
 # Function to reload and enable UFW
 apply_ufw() {
+  ufw enable -y  # Enable first to avoid reload errors
   ufw reload
-  ufw enable -y
 }
 
 # Main menu
@@ -28,7 +28,10 @@ while true; do
   echo "5. Install Smart DNS (Unbound)"
   echo "6. Open New Port"
   echo "0. Exit"
+  
+  # Read and sanitize input
   read -p "Select an option: " choice
+  choice=$(echo "$choice" | tr -d '[:space:]')
 
   case $choice in
     1)
